@@ -19,9 +19,9 @@ steps:
     settings:
       url: http://37.46.83.196:8080/
       access_key:
-        from_secrets: RANCHER_ACCESS_KEY
+        from_secrets: rancher_access_key
       secret_key:
-        from_secrets: RANCHER_SECRET_KEY
+        from_secrets: rancher_secret_key
       service: docker-multi/worker
       docker_image: registry.gitlab.com/radym/multi-docker/multi-worker
       start_first: false
