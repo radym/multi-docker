@@ -2,16 +2,16 @@ kind: pipeline
 type: docker
 name: rancher-deploy
 
-globals:
-  - &docker_creds
-    DOCKER_ID:
-      from_secrets: DOCKER_ID
-    DOCKER_PASSWORD:
-      from_secrets: DOCKER_PASSWORD
-    RANCHER_ACCESS_KEY:
-      from_secrets: RANCHER_ACCESS_KEY
-    RANCHER_SECRET_KEY:
-      from_secrets: RANCHER_SECRET_KEY
+#globals:
+#  - &docker_creds
+#    DOCKER_ID:
+#      from_secrets: DOCKER_ID
+#    DOCKER_PASSWORD:
+#      from_secrets: DOCKER_PASSWORD
+#    RANCHER_ACCESS_KEY:
+#      from_secrets: RANCHER_ACCESS_KEY
+#    RANCHER_SECRET_KEY:
+#      from_secrets: RANCHER_SECRET_KEY
 
 steps:
   - name: rancher
