@@ -9,14 +9,14 @@ script:
   - docker run -e CI=true radym/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t radym/multi-client ./client
-  - docker build -t radym/multi-nginx ./nginx
-  - docker build -t radym/multi-server ./server
-  - docker build -t radym/multi-worker ./worker
+  - docker build -t radym/private/multi-client ./client
+  - docker build -t radym/private/multi-nginx ./nginx
+  - docker build -t radym/private/multi-server ./server
+  - docker build -t radym/private/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take images and push them to Docker Hub
-  - docker push radym/multi-client
-  - docker push radym/multi-nginx
-  - docker push radym/multi-server
-  - docker push radym/multi-worker
+  - docker push radym/private/multi-client
+  - docker push radym/private/multi-nginx
+  - docker push radym/private/multi-server
+  - docker push radym/private/multi-worker
