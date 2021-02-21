@@ -4,10 +4,8 @@ type: docker
 name: multi-docker
 
 steps:
-- name: test
-  commands:
-  - docker build -t radym/react-test -f ./client/Dockerfile.dev ./client
 - name: build
+  image: docker:19.03.12
   commands:
   - docker build -t radym/private/multi-client ./client
   - docker build -t radym/private/multi-nginx ./nginx
@@ -20,3 +18,8 @@ steps:
   - docker push registry.gitlab.com/radym/multi-docker/multi-nginx
   - docker push registry.gitlab.com/radym/multi-docker/multi-server
   - docker push registry.gitlab.com/radym/multi-docker/multi-worker
+  environment:
+    DOCKER_ID:
+      from_secret: DOCKER_ID
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_PASSWORD
