@@ -2,10 +2,21 @@ kind: pipeline
 type: docker
 name: multi-docker
 
+globals:
+  - &docker-creds
+    DOCKER_ID:
+      from_secrets: DOCKER_ID
+    DOCKER_PASSWORD:
+      from_secrets: DOCKER_PASSWORD
+
 steps:
-- name: build
-  image: plugins/docker
-  dockerfile: ./client/Dockerfile
+  - name: build
+    image: plugins/docker
+    settings:
+      repo: registry.gitlab.com/radym/multi-client
+      registry: registry.gitlab.com
+      dockerfile: ./client/Dockerfile
+      <<: *docker-creds
 #  commands:
 #    - docker build -t registry.gitlab.com/radym/multi-client ./client
 #    - docker build -t registry.gitlab.com/radym/multi-nginx ./nginx
@@ -18,10 +29,5 @@ steps:
 #    - docker push registry.gitlab.com/radym/multi-nginx:latest
 #    - docker push registry.gitlab.com/radym/multi-server:latest
 #    - docker push registry.gitlab.com/radym/multi-worker:latest
-  environment:
-    DOCKER_ID:
-      from_secrets: DOCKER_ID
-    DOCKER_PASSWORD:
-      from_secrets: DOCKER_PASSWORD
   when:
     branch: master
