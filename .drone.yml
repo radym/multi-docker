@@ -3,7 +3,7 @@ type: docker
 name: multi-docker
 
 steps:
-- name: build:
+- name: build
   image: plugins/docker
     commands:
       - docker build -t registry.gitlab.com/radym/multi-client ./client
