@@ -1,0 +1,22 @@
+---
+kind: pipeline
+type: docker
+name: multi-docker
+
+steps:
+- name: test
+  commands:
+  - docker build -t radym/react-test -f ./client/Dockerfile.dev ./client
+- name: build
+  commands:
+  - docker build -t radym/private/multi-client ./client
+  - docker build -t radym/private/multi-nginx ./nginx
+  - docker build -t radym/private/multi-server ./server
+  - docker build -t radym/private/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com -u "$DOCKER_ID" --password-stdin
+  # Take images and push them to Docker Hub
+  - docker push registry.gitlab.com/radym/multi-docker/multi-client
+  - docker push registry.gitlab.com/radym/multi-docker/multi-nginx
+  - docker push registry.gitlab.com/radym/multi-docker/multi-server
+  - docker push registry.gitlab.com/radym/multi-docker/multi-worker
