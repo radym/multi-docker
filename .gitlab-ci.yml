@@ -1,0 +1,31 @@
+image: docker:19.03.12
+services:
+  - docker:19.03.12-dind
+
+stages:
+  - build
+  - test
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build:
+  stage: build
+  script:
+    # Build images
+    - docker build -t multi-client ./client
+    - docker build -t multi-nginx ./nginx
+    - docker build -t multi-server ./server
+    - docker build -t multi-worker ./worker
+    # Push images into repository
+    - docker push multi-client
+    - docker push multi-nginx
+    - docker push multi-server
+    - docker push multi-worker
+
+test:
+  stage: test
+  script:
+    - docker build -t radym/react-test -f ./client/Dockerfile.dev ./client
+    - docker run -e CI=true radym/react-test npm test -- --coverage
+
