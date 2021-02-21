@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: multi-docker
+name: rancher-deploy
 
 globals:
   - &docker_creds
@@ -8,28 +8,21 @@ globals:
       from_secrets: DOCKER_ID
     DOCKER_PASSWORD:
       from_secrets: DOCKER_PASSWORD
+    RANCHER_ACCESS_KEY:
+      from_secrets: RANCHER_ACCESS_KEY
+    RANCHER_SECRET_KEY:
+      from_secrets: RANCHER_SECRET_KEY
 
 steps:
-  - name: build
-    image: docker:dind
-    commands:
-    - pwd
-    - which docker
-    - sleep 120
-    - docker build -t registry.gitlab.com/radym/multi-client ./client
+  - name: rancher
+    image: pelotech/drone-rancher
+    url: http://37.46.83.196:8080/
+    access_key: RANCHER_ACCESS_KEY
+    secret_key: RANCHER_SECRET_KEY
+    service: docker-multi/worker
+    docker_image: registry.gitlab.com/radym/multi-docker/multi-worker
+    start_first: false
+    confirm: true
+    timeout: 180
     environment:
       <<: *docker_creds
-    when:
-      branch: master
-#  commands:
-#    - docker build -t registry.gitlab.com/radym/multi-client ./client
-#    - docker build -t registry.gitlab.com/radym/multi-nginx ./nginx
-#    - docker build -t registry.gitlab.com/radym/multi-server ./server
-#    - docker build -t registry.gitlab.com/radym/multi-worker ./worker
-    # Log in to the docker CLI
-#    - echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com -u "$DOCKER_ID" --password-stdin
-    # Take images and push them to Docker Hub
-#    - docker push registry.gitlab.com/radym/multi-client:latest
-#    - docker push registry.gitlab.com/radym/multi-nginx:latest
-#    - docker push registry.gitlab.com/radym/multi-server:latest
-#    - docker push registry.gitlab.com/radym/multi-worker:latest
