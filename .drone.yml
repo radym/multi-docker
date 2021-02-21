@@ -15,7 +15,7 @@ steps:
     commands:
     - pwd
     - which docker
-    - sleep 60
+    - sleep 120
     - docker build -t registry.gitlab.com/radym/multi-client ./client
     environment:
       <<: *docker_creds
