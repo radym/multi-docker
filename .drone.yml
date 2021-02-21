@@ -3,7 +3,7 @@ type: docker
 name: multi-docker
 
 globals:
-  - &docker-creds
+  - &docker_creds
     DOCKER_ID:
       from_secrets: DOCKER_ID
     DOCKER_PASSWORD:
@@ -12,11 +12,14 @@ globals:
 steps:
   - name: build
     image: plugins/docker
+    commands:
+      - cd client
     settings:
       repo: registry.gitlab.com/radym/multi-client
       registry: registry.gitlab.com
-      dockerfile: ./client/Dockerfile
-      <<: *docker-creds
+      dockerfile: Dockerfile
+      auto_tag: true
+      <<: *docker_creds
     when:
       branch: master
 #  commands:
