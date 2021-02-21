@@ -17,6 +17,8 @@ steps:
       registry: registry.gitlab.com
       dockerfile: ./client/Dockerfile
       <<: *docker-creds
+    when:
+      branch: master
 #  commands:
 #    - docker build -t registry.gitlab.com/radym/multi-client ./client
 #    - docker build -t registry.gitlab.com/radym/multi-nginx ./nginx
@@ -29,5 +31,3 @@ steps:
 #    - docker push registry.gitlab.com/radym/multi-nginx:latest
 #    - docker push registry.gitlab.com/radym/multi-server:latest
 #    - docker push registry.gitlab.com/radym/multi-worker:latest
-  when:
-    branch: master
