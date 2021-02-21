@@ -1,25 +1,37 @@
----
-kind: pipeline
-type: docker
-name: multi-docker
-
-steps:
-- name: build
-  image: docker:19.03.12
-  commands:
-  - docker build -t radym/private/multi-client ./client
-  - docker build -t radym/private/multi-nginx ./nginx
-  - docker build -t radym/private/multi-server ./server
-  - docker build -t radym/private/multi-worker ./worker
-  # Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com -u "$DOCKER_ID" --password-stdin
-  # Take images and push them to Docker Hub
-  - docker push registry.gitlab.com/radym/multi-docker/multi-client
-  - docker push registry.gitlab.com/radym/multi-docker/multi-nginx
-  - docker push registry.gitlab.com/radym/multi-docker/multi-server
-  - docker push registry.gitlab.com/radym/multi-docker/multi-worker
-  environment:
-    DOCKER_ID:
-      from_secret: DOCKER_ID
-    DOCKER_PASSWORD:
-      from_secret: DOCKER_PASSWORD
+pipeline:
+  build:
+    image: plugins/docker
+    commands:
+      - docker build -t registry.gitlab.com/radym/multi-client ./client
+      - docker build -t registry.gitlab.com/radym/multi-nginx ./nginx
+      - docker build -t registry.gitlab.com/radym/multi-server ./server
+      - docker build -t registry.gitlab.com/radym/multi-worker ./worker
+      # Log in to the docker CLI
+#      - echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com -u "$DOCKER_ID" --password-stdin
+      # Take images and push them to Docker Hub
+#      - docker push registry.gitlab.com/radym/multi-client:latest
+#      - docker push registry.gitlab.com/radym/multi-nginx:latest
+#      - docker push registry.gitlab.com/radym/multi-server:latest
+#      - docker push registry.gitlab.com/radym/multi-worker:latest
+#    environment:
+#      DOCKER_ID:
+#        from_secrets: DOCKER_ID
+#      DOCKER_PASSWORD:
+#        from_secrets: DOCKER_PASSWORD
+    when:
+      branch: master
+  publish:
+    image: registry.gitlab.com/radym/multi-client
+    image: registry.gitlab.com/radym/multi-nginx
+    image: registry.gitlab.com/radym/multi-server
+    image: registry.gitlab.com/radym/multi-worker
+    repo: registry.gitlab.com
+    username: DOCKER_ID
+    password: DOCKER_PASSWORD
+    environment:
+      DOCKER_ID:
+        from_secrets: DOCKER_ID
+      DOCKER_PASSWORD:
+        from_secrets: DOCKER_PASSWORD
+    when:
+      branch: master
