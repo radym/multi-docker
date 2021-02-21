@@ -1,19 +1,19 @@
 version: '2'
 services:
   nginx:
-    image: radym/multi-nginx
+    image: radym/multi-nginx:latest
     stdin_open: true
     tty: true
     labels:
       io.rancher.container.pull_image: always
   client:
-    image: radym/multi-client
+    image: radym/multi-client:latest
     stdin_open: true
     tty: true
     labels:
       io.rancher.container.pull_image: always
   api:
-    image: radym/multi-server
+    image: radym/multi-server:latest
     environment:
       REDIS_HOST: redis
       REDIS_PORT: '6379'
@@ -27,7 +27,7 @@ services:
     labels:
       io.rancher.container.pull_image: always
   worker:
-    image: radym/multi-worker
+    image: radym/multi-worker:latest
     environment:
       REDIS_HOST: redis
       REDIS_PORT: '6379'
