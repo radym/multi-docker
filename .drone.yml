@@ -16,13 +16,14 @@ globals:
 steps:
   - name: rancher
     image: pelotech/drone-rancher
-    url: http://37.46.83.196:8080/
-    access_key: RANCHER_ACCESS_KEY
-    secret_key: RANCHER_SECRET_KEY
-    service: docker-multi/worker
-    docker_image: registry.gitlab.com/radym/multi-docker/multi-worker
-    start_first: false
-    confirm: true
-    timeout: 180
+    settings:
+      url: http://37.46.83.196:8080/
+      access_key: RANCHER_ACCESS_KEY
+      secret_key: RANCHER_SECRET_KEY
+      service: docker-multi/worker
+      docker_image: registry.gitlab.com/radym/multi-docker/multi-worker
+      start_first: false
+      confirm: true
+      timeout: 180
     environment:
       <<: *docker_creds
