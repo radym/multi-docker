@@ -11,14 +11,10 @@ globals:
 
 steps:
   - name: build
-    image: plugins/docker
+    image: docker:dind
     commands:
-      - cd client
-    settings:
-      repo: registry.gitlab.com/radym/multi-client
-      registry: registry.gitlab.com
-      dockerfile: Dockerfile
-      auto_tag: true
+    - docker build -t registry.gitlab.com/radym/multi-client ./client
+    environment:
       <<: *docker_creds
     when:
       branch: master
