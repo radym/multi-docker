@@ -1,0 +1,51 @@
+version: '2'
+services:
+  nginx:
+    image: radym/multi-nginx
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  client:
+    image: radym/multi-client
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  api:
+    image: radym/multi-server
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      PGUSER: postgres
+      PGHOST: postgres
+      PGDATABASE: postgres
+      PGPASSWORD: postgres_password
+      PGPORT: '5432'
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  worker:
+    image: radym/multi-worker
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres_password
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  redis:
+    image: redis:latest
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

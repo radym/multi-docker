@@ -1,0 +1,20 @@
+version: '2'
+services:
+  nginx:
+    scale: 1
+    start_on_create: true
+  client:
+    scale: 1
+    start_on_create: true
+  api:
+    scale: 1
+    start_on_create: true
+  worker:
+    scale: 1
+    start_on_create: true
+  postgres:
+    scale: 1
+    start_on_create: true
+  redis:
+    scale: 1
+    start_on_create: true
