@@ -5,6 +5,7 @@ services:
 stages:
   - build
   - test
+  - deploy
 
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -28,4 +29,19 @@ test:
   script:
     - docker build -t radym/react-test -f ./client/Dockerfile.dev ./client
     - docker run -e CI=true radym/react-test npm test -- --coverage
+
+deploy:
+  stage: deploy
+  # https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
+  image:
+    name: 512k/rancher-cli:0.6
+    entrypoint: [""]
+  services: []
+  variables:
+    RANCHER_URL: $RANCHER_URL 
+    RANCHER_ACCESS_KEY: $RANCHER_ACCESS_KEY
+    RANCHER_SECRET_KEY: $RANCHER_SECRET_KEY
+    RANCHER_ENVIRONMENT: $RANCHER_ENVIRONMENT
+  script:
+  - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
 
