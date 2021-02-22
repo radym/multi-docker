@@ -38,7 +38,7 @@ deploy:
   # https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
   image:
     name: 512k/rancher-cli:0.6
-    entrypoint: [""]
+    entrypoint: ["cd", "/"]
   services: []
   variables:
     RANCHER_URL: $RANCHER_URL 
@@ -46,6 +46,5 @@ deploy:
     RANCHER_SECRET_KEY: $RANCHER_SECRET_KEY
     RANCHER_ENVIRONMENT: $RANCHER_ENVIRONMENT
   script:
-    - cd /
     - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
 
