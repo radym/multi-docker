@@ -37,7 +37,7 @@ deploy:
     default: false
   # https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
   image:
-    name: 512k/rancher-cli:0.6
+    name: rancher/cli:v0.6.14
     entrypoint: []
   services: []
   variables:
