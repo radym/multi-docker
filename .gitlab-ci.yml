@@ -46,8 +46,10 @@ deploy:
     RANCHER_SECRET_KEY: $RANCHER_SECRET_KEY
     RANCHER_ENVIRONMENT: $RANCHER_ENVIRONMENT
   script:
+    - /bin/sh
+    - cd /usr/
     - rancher stop docker-multi/nginx
     - rancher start docker-multi/nginx
     - rancher up -s docker-multi -d -p -c --force-upgrade
-#    - rancher logs
+
 
