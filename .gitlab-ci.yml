@@ -4,7 +4,7 @@ services:
 
 stages:
   - build
-  - test
+ # - test
   - deploy
 
 default:
@@ -25,11 +25,11 @@ build:
 #    - docker push registry.gitlab.com/radym/multi-docker/multi-server:latest
 #    - docker push registry.gitlab.com/radym/multi-docker/multi-worker:latest
 
-test:
-  stage: test
-  script:
-    - docker build -t radym/react-test -f ./client/Dockerfile.dev ./client
-    - docker run -e CI=true radym/react-test npm test -- --coverage
+#test:
+#  stage: test
+#  script:
+#    - docker build -t radym/react-test -f ./client/Dockerfile.dev ./client
+#    - docker run -e CI=true radym/react-test npm test -- --coverage
 
 deploy:
   stage: deploy
@@ -48,8 +48,8 @@ deploy:
   script:
     - /bin/sh
     - cd /usr/
-    - rancher stop docker-multi/nginx
-    - rancher start docker-multi/nginx
+  #  - rancher stop docker-multi/nginx
+  #  - rancher start docker-multi/nginx
     - rancher up -s docker-multi -d -p -c --force-upgrade
 
 
