@@ -46,6 +46,6 @@ deploy:
     RANCHER_SECRET_KEY: $RANCHER_SECRET_KEY
     RANCHER_ENVIRONMENT: $RANCHER_ENVIRONMENT
   script:
-    - rancher config
+    - cd /
     - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
 
