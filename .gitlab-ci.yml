@@ -48,6 +48,6 @@ deploy:
   script:
     - rancher stop docker-multi/nginx
     - rancher start docker-multi/nginx
-#    - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
+    - rancher up -s docker-multi -d -p -c --force-upgrade
 #    - rancher logs
 
