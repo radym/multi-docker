@@ -48,10 +48,10 @@ deploy:
   script:
     - /bin/sh
     - cd
-    - rancher export docker-multi
-    - cd docker-multi
+    - rancher export $RANCHER_STACK_NAME
+    - cd $RANCHER_STACK_NAME
   #  - rancher stop docker-multi/nginx
   #  - rancher start docker-multi/nginx
-    - rancher up -s docker-multi -d -p -c --force-upgrade
+    - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
 
 
