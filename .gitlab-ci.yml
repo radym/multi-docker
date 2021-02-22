@@ -47,7 +47,9 @@ deploy:
     RANCHER_ENVIRONMENT: $RANCHER_ENVIRONMENT
   script:
     - /bin/sh
-    - cd /usr/
+    - cd
+    - rancher export docker-multi
+    - cd docker-multi
   #  - rancher stop docker-multi/nginx
   #  - rancher start docker-multi/nginx
     - rancher up -s docker-multi -d -p -c --force-upgrade
