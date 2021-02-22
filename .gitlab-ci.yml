@@ -15,15 +15,15 @@ build:
   stage: build
   script:
     # Build images
-    - docker build -t registry.gitlab.com/radym/multi-docker/multi-client ./client
+#    - docker build -t registry.gitlab.com/radym/multi-docker/multi-client ./client
     - docker build -t registry.gitlab.com/radym/multi-docker/multi-nginx ./nginx
-    - docker build -t registry.gitlab.com/radym/multi-docker/multi-server ./server
-    - docker build -t registry.gitlab.com/radym/multi-docker/multi-worker ./worker
+#    - docker build -t registry.gitlab.com/radym/multi-docker/multi-server ./server
+#    - docker build -t registry.gitlab.com/radym/multi-docker/multi-worker ./worker
     # Push images into repository
-    - docker push registry.gitlab.com/radym/multi-docker/multi-client:latest
+#    - docker push registry.gitlab.com/radym/multi-docker/multi-client:latest
     - docker push registry.gitlab.com/radym/multi-docker/multi-nginx:latest
-    - docker push registry.gitlab.com/radym/multi-docker/multi-server:latest
-    - docker push registry.gitlab.com/radym/multi-docker/multi-worker:latest
+#    - docker push registry.gitlab.com/radym/multi-docker/multi-server:latest
+#    - docker push registry.gitlab.com/radym/multi-docker/multi-worker:latest
 
 test:
   stage: test
@@ -46,6 +46,6 @@ deploy:
     RANCHER_SECRET_KEY: $RANCHER_SECRET_KEY
     RANCHER_ENVIRONMENT: $RANCHER_ENVIRONMENT
   script:
-    - rancher logs
-#    - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
+    - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
+#    - rancher logs
 
