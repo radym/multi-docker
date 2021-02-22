@@ -46,6 +46,8 @@ deploy:
     RANCHER_SECRET_KEY: $RANCHER_SECRET_KEY
     RANCHER_ENVIRONMENT: $RANCHER_ENVIRONMENT
   script:
-    - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
+    - rancher stop docker-multi/nginx
+    - rancher start docker-multi/nginx
+#    - rancher up -s $RANCHER_STACK_NAME -d -p -c --force-upgrade
 #    - rancher logs
 
